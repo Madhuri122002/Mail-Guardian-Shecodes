@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Analysis Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Email Analysis Report</h1>
+
+    <!-- Form to enter username and password -->
+    <form action="/getDetails" method="post">
+        <label for="username">Enter Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Fetch Details</button>
+    </form>
+
+    {% if not_found %}
+        <p>Username or password not found.</p>
+    {% endif %}
+
+    {% if data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email Content</th>
+                    <th>Accuracy Score</th>
+                    <th>Attachment Analysis</th>
+                    <th>Domain Reputation Analysis</th>
+                    <th>URL</th>
+                    <th>Content Analysis</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row.Username }}</td>
+                    <td>{{ row.email_content }}</td>
+                    <td>{{ row.accuracy_score }}</td>
+                    <td>{{ row.attachment_analysis }}</td>
+                    <td>{{ row.domain_reputation }}</td>
+                    <td><a href="{{ row.url }}" target="_blank">{{ row.url }}</a></td>
+                    <td>{{ row.content_analysis }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
+
